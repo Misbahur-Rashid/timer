@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Live Clock + Animated Calendar</title>
+<style>
+  :root{
+    --bg:#071029;
+    --card:#0f1f33;
+    --accent:#30cfd0;
+    --muted:#9fb0c2;
+    --glass: rgba(255,255,255,0.03);
+    --glass-2: rgba(255,255,255,0.02);
+    --today:#ffd166;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, var(--bg) 0%, #041428 100%);
+    color:#e6f0f6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .container{
+    width:min(980px,94vw);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:16px;
+    padding:22px;
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap:20px;
+    align-items:start;
+    box-shadow: 0 10px 30px rgba(2,8,23,0.6), 0 2px 8px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  /* Left: Clock */
+  .clock-card{
+    background: linear-gradient(180deg, var(--card), rgba(8,20,35,0.9));
+    padding:26px;
+    border-radius:12px;
+    box-shadow: inset 0 -6px 30px rgba(2,8,23,0.4);
+  }
+  .time{
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    letter-spacing: 2px;
+    font-weight:700;
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+  }
+  .sec{
+    font-size:0.45em;
+    opacity:0.8;
+    font-weight:600;
+    transform-origin:center;
+    display:inline-block;
+  }
+  .date{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:0.98rem;
+  }
+  .meta{
+    margin-top:16px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .chip{
+    background:var(--glass);
+    color:var(--muted);
+    padding:8px 12px;
+    border-radius:999px;
+    font-size:0.95rem;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border: 1px solid rgba(255,255,255,0.02);
+  }
+  .weekday{
+    font-weight:700;
+    color:var(--accent);
+  }
+
+  /* Right: Calendar */
+  .cal-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:18px;
+    border-radius:12px;
+    position:relative;
+    overflow:hidden;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+  .cal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+  .month{
+    font-weight:700;
+    font-size:1.05rem;
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+  .nav{
+    display:flex;
+    gap:8px;
+  }
+  .nav button{
+    background:var(--glass-2);
+    border: none;
+    color:var(--muted);
+    padding:8px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+    width:40px;
+    height:40px;
+    display:inline-grid;
+    place-items:center;
+    transition:transform .18s ease, background .18s ease;
+  }
+  .nav button:hover{ transform:translateY(-3px); background:rgba(255,255,255,0.03); color:#fff; }
+
+  .calendar{
+    margin-top:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    border-radius:10px;
+    padding:12px;
+    border: 1px solid rgba(255,255,255,0.02);
+  }
+  .weekdays{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:6px;
+    font-size:0.86rem;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+  .days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:8px;
+  }
+  .day{
+    min-height:56px;
+    border-radius:8px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-start;
+    padding:6px;
+    color:#d6e6ef;
+    font-weight:600;
+    position:relative;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    background:transparent;
+    border: 1px solid transparent;
+  }
+  .day:hover{
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(2,8,23,0.6);
+  }
+  .day.inactive{
+    color: rgba(214,230,239,0.28);
+    font-weight:600;
+  }
+  .day .num{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    font-size:0.95rem;
+  }
+  .day.today{
+    background: linear-gradient(135deg, rgba(255,209,102,0.08), rgba(255,209,102,0.04));
+    border: 1px dashed rgba(255,209,102,0.18);
+    color: #fff;
+  }
+  .day.today .num{
+    background: linear-gradient(90deg, var(--today), #ffb84d);
+    color: #07202a;
+    font-weight:800;
+    box-shadow: 0 6px 18px rgba(255,209,102,0.12);
+  }
+
+  /* calendar animation: slide + fade */
+  .calendar-inner{
+    transition: transform .4s cubic-bezier(.2,.9,.2,1), opacity .28s ease;
+  }
+  .slide-left{ transform: translateX(-14px); opacity:0.0; }
+  .slide-right{ transform: translateX(14px); opacity:0.0; }
+
+  /* toggle button */
+  .toggle{
+    position:absolute;
+    right:12px;
+    bottom:12px;
+    background: linear-gradient(90deg,var(--accent), #7de1e3);
+    color:#012;
+    border:none;
+    padding:10px 14px;
+    border-radius:999px;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow: 0 8px 25px rgba(3,28,34,0.45);
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+
+  /* small screens */
+  @media (max-width:880px){
+    .container{ grid-template-columns: 1fr; }
+    .cal-card{ order:-1; }
+  }
+
+  /* subtle pulse for seconds */
+  @keyframes pulseSec {
+    0%{ transform: scale(1) }
+    50%{ transform: scale(1.06) }
+    100%{ transform: scale(1) }
+  }
+  .sec.pulse{ animation: pulseSec 1s linear infinite; }
+
+</style>
+</head>
+<body>
+  <div class="container" role="application" aria-label="Live clock and animated calendar">
+    <div class="clock-card" aria-live="polite">
+      <div class="time" id="time">
+        <span id="hhmm">--:--</span>
+        <span class="sec" id="ss">--</span>
+      </div>
+      <div class="date" id="date">Loading date...</div>
+
+      <div class="meta" id="meta">
+        <div class="chip">Local Timezone: <strong style="margin-left:8px" id="tz">UTC</strong></div>
+        <div class="chip">Weekday: <span class="weekday" id="weekday">—</span></div>
+        <div class="chip">UTC Offset: <span id="utcoff">+00:00</span></div>
+      </div>
+
+      <div style="margin-top:18px; color:var(--muted); font-size:0.92rem;">
+        Live clock with date, weekday and animated calendar. Use the calendar controls to navigate months.
+      </div>
+    </div>
+
+    <div class="cal-card" id="calCard">
+      <div class="cal-header">
+        <div class="month" id="monthLabel">—</div>
+        <div class="nav">
+          <button id="prevBtn" aria-label="Previous month">‹</button>
+          <button id="todayBtn" title="Go to today">Today</button>
+          <button id="nextBtn" aria-label="Next month">›</button>
+        </div>
+      </div>
+
+      <div class="calendar" >
+        <div class="calendar-inner" id="calendarInner" role="group" aria-label="Calendar">
+          <div class="weekdays" id="weekdaysRow"></div>
+          <div class="days" id="daysGrid"></div>
+        </div>
+      </div>
+
+      <button class="toggle" id="toggleCalendar" aria-pressed="true">Hide Calendar ▾</button>
+    </div>
+  </div>
+
+<script>
+/* ---------- Utilities ---------- */
+const locale = navigator.language || 'en-GB'; // uses browser locale
+const pad = (n) => String(n).padStart(2,'0');
+
+/* ---------- Time/Date Update ---------- */
+function updateClock() {
+  const now = new Date();
+  const hours = pad(now.getHours());
+  const mins  = pad(now.getMinutes());
+  const secs  = pad(now.getSeconds());
+
+  document.getElementById('hhmm').textContent = `${hours}:${mins}`;
+  const ssEl = document.getElementById('ss');
+  ssEl.textContent = secs;
+
+  // small pulse on seconds change
+  ssEl.classList.remove('pulse');
+  void ssEl.offsetWidth;
+  ssEl.classList.add('pulse');
+
+  // date text, e.g., Tuesday, 17 September 2025
+  const options = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+  const dateStr = now.toLocaleDateString(locale, options);
+  document.getElementById('date').textContent = dateStr;
+
+  // timezone, offset
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local';
+  document.getElementById('tz').textContent = tz;
+
+  const offsetMin = -now.getTimezoneOffset(); // minutes ahead of UTC
+  const sign = offsetMin >= 0 ? '+' : '-';
+  const hh = pad(Math.floor(Math.abs(offsetMin)/60));
+  const mm = pad(Math.abs(offsetMin)%60);
+  document.getElementById('utcoff').textContent = `${sign}${hh}:${mm}`;
+
+  // weekday short
+  const wd = now.toLocaleDateString(locale, { weekday:'long' });
+  document.getElementById('weekday').textContent = wd;
+}
+
+/* update every second */
+updateClock();
+setInterval(updateClock, 1000);
+
+/* ---------- Calendar ---------- */
+const monthLabel = document.getElementById('monthLabel');
+const weekdaysRow = document.getElementById('weekdaysRow');
+const daysGrid = document.getElementById('daysGrid');
+const calendarInner = document.getElementById('calendarInner');
+
+let viewDate = new Date(); // date representing current visible month (any day within the month)
+
+/* Create weekday headers based on locale, starting Monday/Sunday depending on locale */
+function renderWeekdays() {
+  weekdaysRow.innerHTML = '';
+  // we will generate Sun..Sat but locale can display names accordingly
+  const base = new Date(Date.UTC(2021,0,3)); // a Sunday
+  for (let i=0;i<7;i++){
+    const d = new Date(base);
+    d.setDate(base.getDate() + i);
+    const name = d.toLocaleDateString(locale, { weekday:'short' });
+    const el = document.createElement('div');
+    el.textContent = name;
+    el.style.textTransform = 'uppercase';
+    el.style.fontSize = '0.78rem';
+    el.style.letterSpacing = '0.6px';
+    weekdaysRow.appendChild(el);
+  }
+}
+
+/* Render days for the month in viewDate */
+function renderCalendar(animateDirection='none') {
+  // animate: 'left' or 'right' or 'none'
+  calendarInner.classList.remove('slide-left','slide-right');
+  void calendarInner.offsetWidth; // force reflow before animation
+  if (animateDirection === 'left') calendarInner.classList.add('slide-left');
+  if (animateDirection === 'right') calendarInner.classList.add('slide-right');
+
+  const year = viewDate.getFullYear();
+  const month = viewDate.getMonth();
+
+  // label: "September 2025"
+  const label = viewDate.toLocaleDateString(locale, { month:'long', year:'numeric' });
+  monthLabel.innerHTML = `${label}`;
+
+  // first day of month
+  const firstOfMonth = new Date(year, month, 1);
+  const startWeekDay = firstOfMonth.getDay(); // 0 (Sun) - 6 (Sat)
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+
+  // previous month days to fill leading blanks
+  const prevDaysInMonth = new Date(year, month, 0).getDate();
+
+  // We'll build an array of 42 cells (6x7)
+  const cells = [];
+  // leading (prev month)
+  const leading = startWeekDay;
+  for (let i = leading-1; i >=0; i--) {
+    const dayNum = prevDaysInMonth - i;
+    const d = new Date(year, month-1, dayNum);
+    cells.push({ date:d, inactive:true });
+  }
+  // current month
+  for (let d=1; d<=daysInMonth; d++){
+    cells.push({ date: new Date(year, month, d), inactive:false });
+  }
+  // trailing next month
+  let nextDay = 1;
+  while (cells.length < 42) {
+    cells.push({ date: new Date(year, month+1, nextDay++), inactive:true });
+  }
+
+  // Render cells
+  daysGrid.innerHTML = '';
+  const today = new Date();
+  cells.forEach(cell => {
+    const el = document.createElement('div');
+    el.className = 'day' + (cell.inactive ? ' inactive' : '');
+    const isToday = cell.date.getFullYear()===today.getFullYear()
+                 && cell.date.getMonth()===today.getMonth()
+                 && cell.date.getDate()===today.getDate();
+
+    if (isToday) el.classList.add('today');
+
+    // day number
+    const num = document.createElement('div');
+    num.className='num';
+    num.textContent = cell.date.getDate();
+    el.appendChild(num);
+
+    // optionally add small label for events placeholder
+    const evt = document.createElement('div');
+    evt.style.marginLeft='8px';
+    evt.style.flex='1';
+    evt.style.fontSize='0.78rem';
+    evt.style.color = cell.inactive ? 'rgba(214,230,239,0.28)' : 'rgba(214,230,239,0.7)';
+    // placeholder: show month short if inactive
+    if (cell.inactive) {
+      const short = cell.date.toLocaleDateString(locale, { month:'short' });
+      evt.textContent = short;
+    } else {
+      evt.textContent = '';
+    }
+    el.appendChild(evt);
+
+    // click to jump to that day/month
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => {
+      if (cell.inactive) {
+        // jump to that month
+        viewDate = new Date(cell.date.getFullYear(), cell.date.getMonth(), 1);
+        renderCalendar();
+      } else {
+        // select date (we can extend later)
+        alert('Selected: ' + cell.date.toLocaleDateString(locale, { year:'numeric', month:'long', day:'numeric' }));
+      }
+    });
+
+    daysGrid.appendChild(el);
+  });
+
+  // remove animation class after short delay so next action can animate again
+  setTimeout(()=> {
+    calendarInner.classList.remove('slide-left','slide-right');
+  }, 420);
+}
+
+/* navigation */
+document.getElementById('prevBtn').addEventListener('click', ()=>{
+  viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth()-1, 1);
+  renderCalendar('right');
+});
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth()+1, 1);
+  renderCalendar('left');
+});
+document.getElementById('todayBtn').addEventListener('click', ()=>{
+  viewDate = new Date();
+  renderCalendar('left');
+});
+
+/* init */
+renderWeekdays();
+renderCalendar();
+
+/* toggle calendar show/hide w/ animation */
+const calCard = document.getElementById('calCard');
+const toggleBtn = document.getElementById('toggleCalendar');
+let calendarVisible = true;
+toggleBtn.addEventListener('click', ()=>{
+  calendarVisible = !calendarVisible;
+  if (!calendarVisible){
+    // hide calendar with scale + fade
+    calendarInner.style.transition = 'transform .42s cubic-bezier(.2,.9,.2,1), opacity .32s ease';
+    calendarInner.style.transform = 'scale(.92)';
+    calendarInner.style.opacity = '0';
+    toggleBtn.textContent = 'Show Calendar ▴';
+    toggleBtn.setAttribute('aria-pressed','false');
+  } else {
+    calendarInner.style.transform = 'scale(1)';
+    calendarInner.style.opacity = '1';
+    toggleBtn.textContent = 'Hide Calendar ▾';
+    toggleBtn.setAttribute('aria-pressed','true');
+  }
+});
+
+/* ensure calendar inner is visible initially */
+calendarInner.style.opacity='1';
+calendarInner.style.transform='scale(1)';
+
+</script>
+</body>
+</html>
