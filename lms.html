@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyLMS - Learning Management System</title>
+<style>
+  /* Reset */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    background: #f4f6f9;
+    color: #333;
+  }
+
+  /* Navbar */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #2a3f54;
+    padding: 15px 50px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .navbar .logo {
+    color: #fff;
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+
+  .navbar ul {
+    list-style: none;
+    display: flex;
+  }
+
+  .navbar ul li {
+    position: relative;
+    margin-left: 30px;
+  }
+
+  .navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px;
+    display: block;
+  }
+
+  .navbar ul li a:hover { background: #1abc9c; border-radius: 5px; }
+
+  /* Submenu */
+  .navbar ul li ul {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: #34495e;
+    display: none;
+    flex-direction: column;
+    min-width: 180px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .navbar ul li:hover ul { display: flex; }
+
+  .navbar ul li ul li { margin: 0; }
+  .navbar ul li ul li a:hover { background: #1abc9c; }
+
+  /* Hero Slider */
+  .hero-slider {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+  }
+
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .slide {
+    min-width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+  }
+
+  .slide-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    color: #fff;
+    z-index: 5;
+  }
+
+  .slide-content h1 { font-size: 2.5em; margin-bottom: 10px; }
+  .slide-content p { font-size: 1.2em; }
+
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    user-select: none;
+    z-index: 10;
+  }
+
+  .prev { left: 20px; }
+  .next { right: 20px; }
+
+  /* Course Section */
+  .courses {
+    padding: 80px 50px;
+    background: #ecf0f1;
+  }
+
+  .courses h2 { text-align: center; font-size: 2.5em; margin-bottom: 50px; color: #2a3f54; }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+
+  .course-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+
+  .course-card:hover { transform: translateY(-5px); }
+
+  .course-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .course-card .content {
+    padding: 20px;
+  }
+
+  .course-card .content h3 { font-size: 1.4em; margin-bottom: 10px; color: #1abc9c; }
+  .course-card .content p { font-size: 1em; margin-bottom: 15px; }
+  .course-card .content a {
+    text-decoration: none;
+    color: #fff;
+    background: #2a3f54;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  .course-card .content a:hover { background: #1abc9c; }
+
+  /* Footer */
+  footer {
+    background: #2a3f54;
+    color: #fff;
+    padding: 40px 50px;
+    text-align: center;
+  }
+
+  footer p { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">MyLMS</div>
+    <ul>
+      <li><a href="#">Dashboard</a></li>
+      <li>
+        <a href="#">Courses</a>
+        <ul>
+          <li><a href="#">All Courses</a></li>
+          <li><a href="#">Popular Courses</a></li>
+          <li><a href="#">New Courses</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Students</a>
+        <ul>
+          <li><a href="#">All Students</a></li>
+          <li><a href="#">Performance</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Assignments</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Slider -->
+  <section class="hero-slider">
+    <div class="slides">
+      <div class="slide" style="background-image: url('https://source.unsplash.com/1600x500/?online-learning');">
+        <div class="slide-content">
+          <h1>Learn Anytime, Anywhere</h1>
+          <p>Access thousands of courses from top instructors worldwide.</p>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://source.unsplash.com/1600x500/?laptop');">
+        <div class="slide-content">
+          <h1>Interactive Learning</h1>
+          <p>Engaging lessons, assignments, and quizzes at your fingertips.</p>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://source.unsplash.com/1600x500/?education');">
+        <div class="slide-content">
+          <h1>Track Your Progress</h1>
+          <p>Monitor your performance and achievements easily.</p>
+        </div>
+      </div>
+    </div>
+    <div class="prev">&#10094;</div>
+    <div class="next">&#10095;</div>
+  </section>
+
+  <!-- Courses Section -->
+  <section class="courses">
+    <h2>Our Courses</h2>
+    <div class="course-grid">
+      <div class="course-card">
+        <img src="https://source.unsplash.com/400x180/?coding" alt="Course Image">
+        <div class="content">
+          <h3>Web Development</h3>
+          <p>Learn HTML, CSS, JavaScript, and frameworks to build modern websites.</p>
+          <a href="#">Enroll Now</a>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="https://source.unsplash.com/400x180/?data" alt="Course Image">
+        <div class="content">
+          <h3>Data Science</h3>
+          <p>Master Python, SQL, and Machine Learning techniques for data analysis.</p>
+          <a href="#">Enroll Now</a>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="https://source.unsplash.com/400x180/?design" alt="Course Image">
+        <div class="content">
+          <h3>UI/UX Design</h3>
+          <p>Design beautiful interfaces and user experiences for web and mobile apps.</p>
+          <a href="#">Enroll Now</a>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="https://source.unsplash.com/400x180/?cybersecurity" alt="Course Image">
+        <div class="content">
+          <h3>Cyber Security</h3>
+          <p>Learn to protect networks, systems, and data from cyber threats.</p>
+          <a href="#">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 MyLMS. All rights reserved.</p>
+    <p>Contact: info@mylms.com | +123 456 7890</p>
+  </footer>
+
+<script>
+  // Slider JS
+  const slides = document.querySelector('.slides');
+  const slide = document.querySelectorAll('.slide');
+  const prev = document.querySelector('.prev');
+  const next = document.querySelector('.next');
+  let index = 0;
+
+  function showSlide(i) {
+    if(i < 0) index = slide.length - 1;
+    else if(i >= slide.length) index = 0;
+    else index = i;
+    slides.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  prev.addEventListener('click', () => showSlide(index-1));
+  next.addEventListener('click', () => showSlide(index+1));
+  setInterval(() => showSlide(index+1), 5000);
+</script>
+
+</body>
+</html>
