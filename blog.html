@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f9f9f9;
+    }
+    .blog-card img {
+      height: 200px;
+      object-fit: cover;
+    }
+    .filter-section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-5">
+
+  <!-- Blog Category Tabs -->
+  <ul class="nav nav-tabs mb-4" id="blogCategory" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="guide-tab" data-bs-toggle="tab" data-bs-target="#guide" type="button" role="tab">Travel Guide</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="aviation-tab" data-bs-toggle="tab" data-bs-target="#aviation" type="button" role="tab">Aviation Academy</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="blogCategoryContent">
+    
+    <!-- Travel Guide Section -->
+    <div class="tab-pane fade show active" id="guide" role="tabpanel">
+      
+      <!-- Filters -->
+      <div class="filter-section mb-4">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <select class="form-select">
+              <option selected disabled>Filter by Country</option>
+              <option value="1">USA</option>
+              <option value="2">Germany</option>
+              <option value="3">Thailand</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select class="form-select">
+              <option selected disabled>Filter by Blog Type</option>
+              <option value="1">Travel Tips</option>
+              <option value="2">Destination Guide</option>
+              <option value="3">Food & Culture</option>
+            </select>
+          </div>
+          <div class="col-md-4 text-end">
+            <button class="btn btn-primary">Apply Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Cards -->
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card blog-card">
+            <img src="https://source.unsplash.com/600x400/?paris,travel" class="card-img-top" alt="Paris">
+            <div class="card-body">
+              <h5 class="card-title">Paris City Guide</h5>
+              <p class="card-text">Discover the must-see attractions and hidden gems of Paris.</p>
+              <a href="#" class="btn btn-outline-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card blog-card">
+            <img src="https://source.unsplash.com/600x400/?beach,travel" class="card-img-top" alt="Beach">
+            <div class="card-body">
+              <h5 class="card-title">Top Beaches in Thailand</h5>
+              <p class="card-text">Explore the most beautiful beaches for your next vacation.</p>
+              <a href="#" class="btn btn-outline-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card blog-card">
+            <img src="https://source.unsplash.com/600x400/?germany,travel" class="card-img-top" alt="Germany">
+            <div class="card-body">
+              <h5 class="card-title">Germany Travel Tips</h5>
+              <p class="card-text">Essential travel tips for exploring Germany hassle-free.</p>
+              <a href="#" class="btn btn-outline-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aviation Academy Section -->
+    <div class="tab-pane fade" id="aviation" role="tabpanel">
+      <h4 class="mb-3">Aviation Academy Blogs</h4>
+      <p>Content and blog posts related to aviation training and academy will appear here.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+<!-- Interactive Footer with Map -->
+<footer>
+  <div class="footer-container">
+    <!-- About Section -->
+    <div class="footer-section about">
+      <h2>About Us</h2>
+      <p>We are a leading travel and agriculture platform, connecting you to the best experiences and insights. Explore guides, tips, and tools for your journey.</p>
+      <div class="socials">
+        <a href="#" title="Facebook"><img src="facebook-icon.png" alt="Facebook"></a>
+        <a href="#" title="Twitter"><img src="twitter-icon.png" alt="Twitter"></a>
+        <a href="#" title="Instagram"><img src="instagram-icon.png" alt="Instagram"></a>
+        <a href="#" title="LinkedIn"><img src="linkedin-icon.png" alt="LinkedIn"></a>
+      </div>
+    </div>
+
+    <!-- Quick Links Section -->
+    <div class="footer-section links">
+      <h2>Quick Links</h2>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Travel Guides</a></li>
+        <li><a href="#">Aviation Academy</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Map Section -->
+    <div class="footer-section map">
+      <h2>Our Location</h2>
+      <div class="map-container">
+        <!-- Replace the src with your Google Maps Embed URL -->
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.902384587846!2d90.40616441543935!3d23.81033138458842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755bf2c9d33d0ab%3A0x53ff5c68b25b2ec9!2sDhaka!5e0!3m2!1sen!2sbd!4v1590000000000!5m2!1sen!2sbd" 
+          width="100%" 
+          height="200" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="footer-section contact">
+      <h2>Contact Us</h2>
+      <p>Email: info@example.com</p>
+      <p>Phone: +123 456 7890</p>
+      <p>Address: 123 Street Name, City, Country</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    &copy; 2025 Travel & Agriculture Co. All rights reserved.
+  </div>
+</footer>
+
+<!-- CSS -->
+<style>
+footer {
+  background-color: #0f172a;
+  color: #fff;
+  padding: 50px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+.footer-section {
+  flex: 1 1 220px;
+}
+.footer-section h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #fbbf24;
+}
+.footer-section p, .footer-section li, .footer-section a {
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.footer-section a {
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-section a:hover {
+  color: #fbbf24;
+}
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+.socials a img {
+  width: 24px;
+  margin-right: 10px;
+  transition: transform 0.3s;
+}
+.socials a:hover img {
+  transform: scale(1.2);
+}
+.map-container iframe {
+  border-radius: 8px;
+  border: 0;
+  transition: transform 0.3s;
+}
+.map-container iframe:hover {
+  transform: scale(1.02);
+}
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  border-top: 1px solid #1e293b;
+  padding-top: 15px;
+  color: #94a3b8;
+}
+</style>
