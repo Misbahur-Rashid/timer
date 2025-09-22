@@ -3,255 +3,291 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Company Task Management Dashboard</title>
+<title>Employee Management Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 <style>
-  /* Basic Reset */
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-  body { background-color: #f0f2f5; }
-
-  /* Dashboard Layout */
-  .dashboard {
-    display: flex;
-    min-height: 100vh;
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f6fa;
   }
-
-  /* Sidebar */
   .sidebar {
-    width: 250px;
-    background-color: #1e293b;
+    height: 100vh;
+    background-color: #1f2937;
     color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-  }
-  .sidebar h2 { color: #fbbf24; margin-bottom: 20px; }
-  .sidebar a {
-    color: #cbd5e1;
-    text-decoration: none;
-    margin: 10px 0;
-    display: block;
-    padding: 8px;
-    border-radius: 4px;
-    transition: 0.3s;
-  }
-  .sidebar a:hover { background-color: #334155; color: #fbbf24; }
-
-  /* Main Content */
-  .main {
-    flex: 1;
-    padding: 20px;
-  }
-  .main h1 { margin-bottom: 20px; color: #0f172a; }
-
-  /* Task Filters */
-  .filters {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  .filters button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #fbbf24;
-    color: #1e293b;
-    transition: 0.3s;
-  }
-  .filters button.active, .filters button:hover { background-color: #f59e0b; color: #fff; }
-
-  /* Task Table */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  table th, table td {
-    padding: 12px 15px;
-    text-align: left;
-  }
-  table th {
-    background-color: #334155;
-    color: #fbbf24;
-  }
-  table tr:nth-child(even) { background-color: #f8fafc; }
-  table tr:hover { background-color: #e2e8f0; }
-
-  /* Status Labels */
-  .status {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    color: #fff;
-    display: inline-block;
-  }
-  .status.todo { background-color: #f87171; }
-  .status.inprogress { background-color: #3b82f6; }
-  .status.completed { background-color: #10b981; }
-
-  /* Task Modal */
-  .modal {
-    display: none;
+    padding: 20px 10px;
     position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background-color: rgba(0,0,0,0.5);
-    justify-content:center; align-items:center;
+    width: 220px;
   }
-  .modal-content {
-    background-color:#fff;
-    padding:20px;
-    border-radius:8px;
-    width: 400px;
-    max-width: 90%;
+  .sidebar a {
+    color: #fff;
+    display: block;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 5px;
+    text-decoration: none;
   }
-  .modal-content h2 { margin-bottom: 15px; color: #0f172a; }
-  .modal-content input, .modal-content select, .modal-content textarea {
-    width: 100%; padding:8px 10px; margin-bottom: 10px; border-radius: 4px; border:1px solid #cbd5e1;
+  .sidebar a:hover, .sidebar a.active {
+    background-color: #3b82f6;
   }
-  .modal-content button {
-    padding:8px 15px; background-color: #fbbf24; border:none; border-radius:4px; cursor:pointer; transition:0.3s;
+  .content {
+    margin-left: 240px;
+    padding: 20px;
   }
-  .modal-content button:hover { background-color: #f59e0b; color:#fff; }
-
+  .card {
+    border-radius: 10px;
+  }
+  .table td, .table th {
+    vertical-align: middle;
+  }
 </style>
 </head>
 <body>
 
-<div class="dashboard">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>Task Manager</h2>
-    <a href="#">Dashboard</a>
-    <a href="#">All Tasks</a>
-    <a href="#">Projects</a>
-    <a href="#">Teams</a>
-    <a href="#">Settings</a>
-    <a href="#" id="addTaskBtn">+ Add Task</a>
+<!-- Sidebar -->
+<div class="sidebar">
+  <h3 class="text-center">EMS Dashboard</h3>
+  <a href="#" class="active" onclick="showSection('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</a>
+  <a href="#" onclick="showSection('employees')"><i class="bi bi-people"></i> Employees</a>
+  <a href="#" onclick="showSection('profile')"><i class="bi bi-person-circle"></i> Profile</a>
+  <a href="#" onclick="showSection('tasks')"><i class="bi bi-list-task"></i> Tasks</a>
+  <a href="#" onclick="showSection('attendance')"><i class="bi bi-calendar-check"></i> Attendance</a>
+  <a href="#" onclick="showSection('analytics')"><i class="bi bi-bar-chart"></i> Analytics</a>
+  <a href="#" onclick="showSection('admin')"><i class="bi bi-gear"></i> Admin</a>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+
+  <!-- Dashboard Section -->
+  <div id="dashboard" class="section">
+    <h2>Welcome, John Doe!</h2>
+    <div class="row my-4">
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5>Total Employees</h5>
+          <h3>120</h3>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5>Active Projects</h5>
+          <h3>12</h3>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5>Pending Tasks</h5>
+          <h3>34</h3>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5>Leaves Requested</h5>
+          <h3>7</h3>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Main Content -->
-  <div class="main">
-    <h1>Company Task Dashboard</h1>
-
-    <!-- Filters -->
-    <div class="filters">
-      <button class="active" onclick="filterTasks('all')">All</button>
-      <button onclick="filterTasks('todo')">To Do</button>
-      <button onclick="filterTasks('inprogress')">In Progress</button>
-      <button onclick="filterTasks('completed')">Completed</button>
-    </div>
-
-    <!-- Task Table -->
-    <table id="taskTable">
-      <thead>
+  <!-- Employee List Section -->
+  <div id="employees" class="section" style="display:none">
+    <h2>Employee Directory</h2>
+    <input type="text" id="searchEmployee" class="form-control my-2" placeholder="Search by name or department" onkeyup="filterEmployee()">
+    <table class="table table-striped mt-2">
+      <thead class="table-dark">
         <tr>
-          <th>Task Name</th>
-          <th>Assigned To</th>
-          <th>Priority</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Department</th>
+          <th>Email</th>
           <th>Status</th>
-          <th>Deadline</th>
+          <th>Action</th>
         </tr>
       </thead>
-      <tbody>
-        <tr data-status="todo">
-          <td>Prepare Monthly Report</td>
-          <td>John Doe</td>
-          <td>High</td>
-          <td><span class="status todo">To Do</span></td>
-          <td>2025-09-30</td>
-        </tr>
-        <tr data-status="inprogress">
-          <td>Update Client Website</td>
+      <tbody id="employeeTable">
+        <tr>
           <td>Jane Smith</td>
-          <td>Medium</td>
-          <td><span class="status inprogress">In Progress</span></td>
-          <td>2025-09-25</td>
+          <td>Software Engineer</td>
+          <td>IT</td>
+          <td>jane@company.com</td>
+          <td>Active</td>
+          <td><button class="btn btn-sm btn-primary" onclick="showProfile('Jane Smith')">View</button></td>
         </tr>
-        <tr data-status="completed">
-          <td>Team Meeting Preparation</td>
-          <td>Robert Lee</td>
-          <td>Low</td>
-          <td><span class="status completed">Completed</span></td>
-          <td>2025-09-20</td>
+        <tr>
+          <td>Mark Wilson</td>
+          <td>Project Manager</td>
+          <td>IT</td>
+          <td>mark@company.com</td>
+          <td>Active</td>
+          <td><button class="btn btn-sm btn-primary" onclick="showProfile('Mark Wilson')">View</button></td>
         </tr>
       </tbody>
     </table>
   </div>
-</div>
 
-<!-- Task Modal -->
-<div class="modal" id="taskModal">
-  <div class="modal-content">
-    <h2>Add New Task</h2>
-    <input type="text" id="taskName" placeholder="Task Name" required>
-    <input type="text" id="assignedTo" placeholder="Assigned To" required>
-    <select id="priority">
-      <option value="High">High</option>
-      <option value="Medium">Medium</option>
-      <option value="Low">Low</option>
-    </select>
-    <select id="status">
-      <option value="todo">To Do</option>
-      <option value="inprogress">In Progress</option>
-      <option value="completed">Completed</option>
-    </select>
-    <input type="date" id="deadline" required>
-    <button onclick="addTask()">Add Task</button>
+  <!-- Profile Section -->
+  <div id="profile" class="section" style="display:none">
+    <h2>Employee Profile</h2>
+    <div class="card p-4">
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <img src="https://via.placeholder.com/150" alt="Profile Photo" class="img-fluid rounded-circle mb-2">
+          <h5 id="profileName">John Doe</h5>
+          <p>Software Engineer</p>
+        </div>
+        <div class="col-md-9">
+          <h6>Contact Info</h6>
+          <p>Email: john@company.com</p>
+          <p>Phone: +1234567890</p>
+          <h6>Professional Info</h6>
+          <p>Department: IT</p>
+          <p>Manager: Sarah Lee</p>
+          <p>Date of Joining: 2023-01-15</p>
+          <button class="btn btn-primary">Edit Profile</button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Tasks Section -->
+  <div id="tasks" class="section" style="display:none">
+    <h2>Task Management</h2>
+    <table class="table table-bordered mt-2">
+      <thead class="table-dark">
+        <tr>
+          <th>Task</th>
+          <th>Assigned To</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Deadline</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Update Website</td>
+          <td>Jane Smith</td>
+          <td>In Progress</td>
+          <td>High</td>
+          <td>2025-09-25</td>
+        </tr>
+        <tr>
+          <td>Prepare Report</td>
+          <td>Mark Wilson</td>
+          <td>Pending</td>
+          <td>Medium</td>
+          <td>2025-09-28</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Attendance Section -->
+  <div id="attendance" class="section" style="display:none">
+    <h2>Attendance & Leaves</h2>
+    <table class="table table-striped mt-2">
+      <thead class="table-dark">
+        <tr>
+          <th>Date</th>
+          <th>Employee</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2025-09-20</td>
+          <td>Jane Smith</td>
+          <td>Present</td>
+        </tr>
+        <tr>
+          <td>2025-09-20</td>
+          <td>Mark Wilson</td>
+          <td>Absent</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Analytics Section -->
+  <div id="analytics" class="section" style="display:none">
+    <h2>Analytics & Reports</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="employeeChart"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="taskChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Section -->
+  <div id="admin" class="section" style="display:none">
+    <h2>Admin Controls</h2>
+    <p>Add/Remove employees, manage roles, configure system settings.</p>
+    <button class="btn btn-success">Add Employee</button>
+    <button class="btn btn-danger">Remove Employee</button>
+  </div>
+
 </div>
 
-<!-- JavaScript -->
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  // Modal Open/Close
-  const modal = document.getElementById('taskModal');
-  document.getElementById('addTaskBtn').onclick = () => modal.style.display = 'flex';
-  window.onclick = (e) => { if(e.target == modal) modal.style.display = 'none'; }
+  function showSection(section) {
+    document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+    document.getElementById(section).style.display = 'block';
+    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
 
-  // Add Task
-  function addTask() {
-    const name = document.getElementById('taskName').value;
-    const assigned = document.getElementById('assignedTo').value;
-    const priority = document.getElementById('priority').value;
-    const status = document.getElementById('status').value;
-    const deadline = document.getElementById('deadline').value;
-
-    if(name && assigned && deadline){
-      const table = document.getElementById('taskTable').getElementsByTagName('tbody')[0];
-      const newRow = table.insertRow();
-      newRow.setAttribute('data-status', status);
-      newRow.innerHTML = `
-        <td>${name}</td>
-        <td>${assigned}</td>
-        <td>${priority}</td>
-        <td><span class="status ${status}">${status.replace(/^\w/, c => c.toUpperCase())}</span></td>
-        <td>${deadline}</td>
-      `;
-      modal.style.display = 'none';
-      document.getElementById('taskName').value = '';
-      document.getElementById('assignedTo').value = '';
-      document.getElementById('deadline').value = '';
-    } else {
-      alert('Please fill all required fields!');
+  function filterEmployee() {
+    let input = document.getElementById('searchEmployee').value.toLowerCase();
+    let rows = document.getElementById('employeeTable').getElementsByTagName('tr');
+    for (let i=0;i<rows.length;i++){
+      let cells = rows[i].getElementsByTagName('td');
+      let match = false;
+      for (let j=0;j<cells.length-1;j++){
+        if(cells[j].innerText.toLowerCase().includes(input)){
+          match = true; break;
+        }
+      }
+      rows[i].style.display = match ? '' : 'none';
     }
   }
 
-  // Filter Tasks
-  function filterTasks(status){
-    const rows = document.querySelectorAll('#taskTable tbody tr');
-    document.querySelectorAll('.filters button').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    rows.forEach(row => {
-      if(status === 'all' || row.getAttribute('data-status') === status){
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
-      }
-    });
+  function showProfile(name){
+    document.getElementById('profileName').innerText = name;
+    showSection('profile');
   }
+
+  // Charts
+  const ctx1 = document.getElementById('employeeChart').getContext('2d');
+  const employeeChart = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['IT', 'HR', 'Sales', 'Marketing'],
+      datasets: [{
+        label: 'Employees per Department',
+        data: [40, 20, 30, 30],
+        backgroundColor: '#3b82f6'
+      }]
+    }
+  });
+
+  const ctx2 = document.getElementById('taskChart').getContext('2d');
+  const taskChart = new Chart(ctx2, {
+    type: 'pie',
+    data: {
+      labels: ['Pending', 'In Progress', 'Completed'],
+      datasets: [{
+        label: 'Task Status',
+        data: [15, 30, 45],
+        backgroundColor: ['#f59e0b','#3b82f6','#10b981']
+      }]
+    }
+  });
 </script>
 </body>
 </html>

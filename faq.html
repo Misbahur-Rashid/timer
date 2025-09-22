@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ - TravelEx</title>
+<style>
+    /* Reset & Body */
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; color: #333; }
+
+    /* Navbar */
+    nav {
+        background-color: #007BFF;
+        padding: 15px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
+    }
+    nav .logo { font-size: 24px; font-weight: bold; }
+    nav ul { display: flex; list-style: none; gap: 20px; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
+    nav ul li a:hover { text-decoration: underline; }
+
+    /* Page Header */
+    .page-header { padding: 40px 30px; text-align: center; background-color: #e9f2ff; }
+    .page-header h1 { font-size: 36px; margin-bottom: 10px; }
+    .page-header p { font-size: 18px; color: #555; }
+
+    /* Main Container */
+    .container { display: flex; padding: 30px; min-height: 70vh; gap: 20px; }
+
+    /* Sidebar */
+    .sidebar { width: 250px; background-color: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.05);}
+    .category { font-weight: bold; margin-top: 15px; cursor: pointer; color: #333; }
+    .subcategory { margin-left: 15px; margin-top: 5px; cursor: pointer; color: #555; }
+    .subcategory:hover { color: #007BFF; }
+
+    /* Content Panel */
+    .content { flex: 1; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    .faq-item { display: none; }
+    .faq-item.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+    .faq-item img { max-width: 100%; height: auto; margin-top: 15px; border-radius: 5px; }
+
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+    /* Footer */
+    footer { background-color: #007BFF; color: #fff; text-align: center; padding: 20px; margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <div class="logo">TravelEx</div>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Destinations</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Page Header -->
+<div class="page-header">
+    <h1>Frequently Asked Questions</h1>
+    <p>Explore answers to common travel queries. Click on a category to learn more.</p>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="category">Food</div>
+        <div class="subcategory" data-target="frozen-food">Frozen Food</div>
+        <div class="subcategory" data-target="dry-food">Dry Food</div>
+        <div class="subcategory" data-target="fruits">Fruits</div>
+
+        <div class="category">Cloth</div>
+        <div class="subcategory" data-target="mens-cloth">Men's Cloth</div>
+        <div class="subcategory" data-target="womens-cloth">Women's Cloth</div>
+
+        <div class="category">Transport</div>
+        <div class="subcategory" data-target="bus">Bus</div>
+        <div class="subcategory" data-target="train">Train</div>
+    </div>
+
+    <!-- Content Panel -->
+    <div class="content">
+        <div id="frozen-food" class="faq-item active">
+            <h2>Frozen Food</h2>
+            <p>Learn about the best frozen food options while traveling. Tips for storage and quality.</p>
+            <img src="https://via.placeholder.com/600x300?text=Frozen+Food" alt="Frozen Food">
+        </div>
+
+        <div id="dry-food" class="faq-item">
+            <h2>Dry Food</h2>
+            <p>Dry food is convenient for travel. Explore options like noodles, snacks, and ready-to-eat items.</p>
+            <img src="https://via.placeholder.com/600x300?text=Dry+Food" alt="Dry Food">
+        </div>
+
+        <div id="fruits" class="faq-item">
+            <h2>Fruits</h2>
+            <p>Fresh and preserved fruits for your journey. Tips for packing and maintaining freshness.</p>
+            <img src="https://via.placeholder.com/600x300?text=Fruits" alt="Fruits">
+        </div>
+
+        <div id="mens-cloth" class="faq-item">
+            <h2>Men's Cloth</h2>
+            <p>Travel-friendly clothing for men. Lightweight, comfortable, and easy to carry.</p>
+            <img src="https://via.placeholder.com/600x300?text=Men's+Cloth" alt="Men's Cloth">
+        </div>
+
+        <div id="womens-cloth" class="faq-item">
+            <h2>Women's Cloth</h2>
+            <p>Stylish and comfortable clothing for women while traveling.</p>
+            <img src="https://via.placeholder.com/600x300?text=Women's+Cloth" alt="Women's Cloth">
+        </div>
+
+        <div id="bus" class="faq-item">
+            <h2>Bus Transport</h2>
+            <p>Tips for traveling by bus, ticket booking, and comfort during long journeys.</p>
+            <img src="https://via.placeholder.com/600x300?text=Bus+Transport" alt="Bus Transport">
+        </div>
+
+        <div id="train" class="faq-item">
+            <h2>Train Transport</h2>
+            <p>Guide to train travel, reservations, and what to expect onboard.</p>
+            <img src="https://via.placeholder.com/600x300?text=Train+Transport" alt="Train Transport">
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    &copy; 2025 TravelEx. All rights reserved.
+</footer>
+
+<script>
+    const subcategories = document.querySelectorAll('.subcategory');
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    subcategories.forEach(sub => {
+        sub.addEventListener('click', () => {
+            const target = sub.getAttribute('data-target');
+
+            faqItems.forEach(item => item.classList.remove('active'));
+            document.getElementById(target).classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
+

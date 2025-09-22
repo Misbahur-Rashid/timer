@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQs - Your Website</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    .faq-header { background: #f4f4f4; padding: 60px 20px; text-align: center; }
+    .faq-header h1 { margin-bottom: 10px; }
+    .faq-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    .faq-item { border-bottom: 1px solid #ddd; padding: 15px 0; }
+    .faq-question { cursor: pointer; font-weight: bold; position: relative; padding-right: 20px; }
+    .faq-question::after { content: "+"; position: absolute; right: 0; font-size: 20px; transition: transform 0.3s; }
+    .faq-question.active::after { content: "-"; transform: rotate(180deg); }
+    .faq-answer { display: none; margin-top: 10px; color: #555; }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <section class="faq-header">
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about our services, explained clearly.</p>
+  </section>
+
+  <!-- FAQ List -->
+  <div class="faq-container">
+    <div class="faq-item">
+      <div class="faq-question">What is your service about?</div>
+      <div class="faq-answer">Our service provides solutions to ... (your detailed answer here)</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">How can I contact support?</div>
+      <div class="faq-answer">You can contact support via email, phone, or live chat on our website.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Do you offer refunds?</div>
+      <div class="faq-answer">Yes, we offer a 30-day refund policy for all eligible purchases.</div>
+    </div>
+    <!-- Add more FAQ items here -->
+  </div>
+
+  <script>
+    const questions = document.querySelectorAll('.faq-question');
+    questions.forEach(q => {
+      q.addEventListener('click', () => {
+        q.classList.toggle('active');
+        const answer = q.nextElementSibling;
+        answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>
