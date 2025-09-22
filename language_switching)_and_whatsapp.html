@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-language Website</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; }
+  /* Navbar */
+  nav { background: #4caf50; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; color: #fff; }
+  nav .logo { font-size: 24px; font-weight: bold; }
+  nav ul { list-style: none; display: flex; margin:0; padding:0; }
+  nav ul li { margin-left: 20px; cursor: pointer; }
+  nav ul li i { margin-right: 5px; }
+  
+  /* Floating WhatsApp Icon */
+  .whatsapp-icon { position: fixed; right: 20px; bottom: 20px; background: #25D366; color: #fff; padding: 15px; border-radius: 50%; font-size: 24px; box-shadow: 0 0 10px rgba(0,0,0,0.3); z-index: 1000; cursor: pointer; transition: transform 0.3s; }
+  .whatsapp-icon:hover { transform: scale(1.1); }
+
+  /* Content */
+  .content { padding: 40px 20px; text-align: center; }
+  .content h1 { font-size: 36px; margin-bottom: 20px; }
+  .content p { font-size: 20px; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+  <div class="logo" id="logo">Flyger Holidays</div>
+  <ul>
+    <li onclick="switchLanguage('en')"><i class="fas fa-language"></i> English</li>
+    <li onclick="switchLanguage('bn')"><i class="fas fa-language"></i> বাংলা</li>
+  </ul>
+</nav>
+
+<!-- Floating WhatsApp Icon -->
+<a href="https://wa.me/8801234567890" target="_blank" class="whatsapp-icon">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Main Content -->
+<div class="content">
+  <h1 id="title">Welcome to Flyger Holidays</h1>
+  <p id="subtitle">Explore amazing travel guides, aviation tips, and adventure journeys!</p>
+</div>
+
+<script>
+// Language dictionary
+const translations = {
+  en: {
+    title: "Welcome to Flyger Holidays",
+    subtitle: "Explore amazing travel guides, aviation tips, and adventure journeys!"
+  },
+  bn: {
+    title: "ফ্লাইগার হলিডেজ-এ স্বাগতম",
+    subtitle: "অদ্ভুত ভ্রমণ গাইড, এভিয়েশন টিপস এবং অ্যাডভেঞ্চার যাত্রা আবিষ্কার করুন!"
+  }
+};
+
+// Function to switch language
+function switchLanguage(lang) {
+  document.getElementById('title').innerText = translations[lang].title;
+  document.getElementById('subtitle').innerText = translations[lang].subtitle;
+  document.getElementById('logo').innerText = lang === 'en' ? "Flyger Holidays" : "ফ্লাইগার হলিডেজ";
+}
+</script>
+
+</body>
+</html>

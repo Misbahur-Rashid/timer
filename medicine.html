@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Medicine Management System</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 0;}
+header { background: #4caf50; color: #fff; text-align: center; padding: 20px;}
+.container { max-width: 1000px; margin: 20px auto; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+h2 { color: #333;}
+.profile, .schedule, .appointments { margin-top: 30px;}
+.card { background: #e7f5e6; padding: 15px; border-radius: 8px; margin-bottom: 15px;}
+.card button { padding: 8px 15px; border: none; border-radius: 5px; background: #4caf50; color: #fff; cursor: pointer;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Daily Medicine Management System</h1>
+</header>
+
+<div class="container">
+  <!-- Patient Profile -->
+  <div class="profile card">
+    <h2>Patient Profile</h2>
+    <p><strong>Name:</strong> John Doe</p>
+    <p><strong>Age:</strong> 35</p>
+    <p><strong>Medical Conditions:</strong> Diabetes, Hypertension</p>
+    <p><strong>Contact:</strong> john@example.com</p>
+  </div>
+
+  <!-- Medicine Schedule -->
+  <div class="schedule card">
+    <h2>Today's Medicine Schedule</h2>
+    <div>
+      <p><strong>Morning:</strong> Aspirin (1 Tablet) - <span>Days remaining: 10</span></p>
+      <button onclick="markTaken('Morning', 'Aspirin')">Mark as Taken</button>
+    </div>
+    <div>
+      <p><strong>Afternoon:</strong> Vitamin D (2 Tablets) - <span>Days remaining: 15</span></p>
+      <button onclick="markTaken('Afternoon', 'Vitamin D')">Mark as Taken</button>
+    </div>
+    <div>
+      <p><strong>Evening:</strong> Metformin (1 Tablet) - <span>Days remaining: 20</span></p>
+      <button onclick="markTaken('Evening', 'Metformin')">Mark as Taken</button>
+    </div>
+  </div>
+
+  <!-- Upcoming Appointments -->
+  <div class="appointments card">
+    <h2>Upcoming Doctor Appointments</h2>
+    <p><strong>Next Appointment:</strong> Dr. Smith - 25th Sept 2025, 10:00 AM</p>
+    <p><strong>Notes:</strong> Routine check-up</p>
+  </div>
+</div>
+
+<script>
+// Example JS function for marking medicine as taken
+function markTaken(time, medicine){
+  alert(`You marked ${medicine} as taken for ${time}`);
+}
+
+// Example notification (can be extended to set daily reminders)
+if(Notification.permission !== "granted") Notification.requestPermission();
+function notifyMedicine(time, medicine){
+  if(Notification.permission === "granted"){
+    new Notification(`Time for your medicine: ${medicine} (${time})`);
+  }
+}
+</script>
+
+</body>
+</html>
